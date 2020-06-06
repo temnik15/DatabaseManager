@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
+import ru.temnik.databaseManager.DAO.TableDAO;
 import ru.temnik.databaseManager.DAO.TableDaoJdbcImpl;
 import ru.temnik.databaseManager.Scenes.AbstractScene;
 import ru.temnik.databaseManager.Scenes.AuthScene;
@@ -18,7 +19,7 @@ public class ControllerGUI extends Application {
     @Setter
     private AbstractScene currentScene;
     private Map<String, AbstractScene> allScenes;
-    private  TableDaoJdbcImpl tableDAO;
+    private TableDAO tableDAO;
 
 
     public static void main(String[] args) {

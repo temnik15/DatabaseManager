@@ -12,10 +12,10 @@ public class TableDaoJdbcImpl implements TableDAO{
 
     private final String SQL_FIND_ALL_TABLE_NAMES =
             "SELECT table_name FROM information_schema.tables  " +
-                    "WHERE table_schema='public'  ORDER BY table_name";
+                    "WHERE table_schema='public'  and table_name !='users' ORDER BY table_name";
     private final String SQL_FIND_TABLE_NAMES_BY_NAME =
             "SELECT table_name FROM information_schema.tables  " +
-                    "WHERE table_schema='public' and table_name LIKE ? ORDER BY table_name";
+                    "WHERE table_schema='public' and table_name LIKE ? and table_name !='users' ORDER BY table_name";
 
     public TableDaoJdbcImpl(DataSource dataSource) {
         try {
@@ -47,6 +47,21 @@ public class TableDaoJdbcImpl implements TableDAO{
     @Override
     public void save(String obj) {
 
+    }
+
+    @Override
+    public void delete(String obj) {
+
+    }
+
+    @Override
+    public void update(String obj) {
+
+    }
+
+    @Override
+    public List<String> findByParameters(String obj) {
+        return null;
     }
 
 

@@ -9,7 +9,7 @@ import javafx.scene.text.Font;
 import ru.temnik.databaseManager.ControllerGUI;
 import ru.temnik.databaseManager.DAO.UserDAO;
 import ru.temnik.databaseManager.DAO.UserDaoJdbcImpl;
-import ru.temnik.databaseManager.EntitiesGUI.User;
+import ru.temnik.databaseManager.Entities.User;
 
 public class AuthScene extends AbstractScene {
     private final UserDAO userDAO;

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class Acts {
+public class Act {
     private int id_acts;
     private int id_document;
     private int id_employee;

@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActsDAOJdbsImpl implements CrudDAO<Act> {
+public class ActsAdmDAOJdbsImpl implements CrudDAO<Act> {
     private Connection connection;
     private final String SQL_FIND_ALL = "SELECT * FROM acts_admission";
     private final String SQL_SAVE = "INSERT INTO acts_admission(id_acts,id_document, id_employee,id_reader,date) " +
@@ -16,8 +16,10 @@ public class ActsDAOJdbsImpl implements CrudDAO<Act> {
     private final String SQL_DELETE = "DELETE FROM acts_admission WHERE id_acts = ?";
     private final String SQL_UPDATE = "UPDATE acts_admission SET status_name = ? " +
             "WHERE id_status = ?, id_document=?, id_employee=?, id_reader=?, date=?";
+    private final String SQL_FIND_BY_PARAMETRS = "SELECT * FROM acts_admission " +
+            "WHERE id_status = ?, id_document=?, id_employee=?, id_reader=?, date=?";
 
-    public ActsDAOJdbsImpl(DataSource dataSource) {
+    public ActsAdmDAOJdbsImpl(DataSource dataSource) {
         try {
             connection = dataSource.getConnection();
         } catch (SQLException e) {
@@ -29,6 +31,7 @@ public class ActsDAOJdbsImpl implements CrudDAO<Act> {
     public List<Act> findAll() {
         try {
             List<Act> acts = new ArrayList<>();
+            acts.add(new Act());
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(SQL_FIND_ALL);
             while (resultSet.next()) {
@@ -83,7 +86,7 @@ public class ActsDAOJdbsImpl implements CrudDAO<Act> {
             statement.setInt(3, obj.getId_employee());
             statement.setInt(4, obj.getId_reader());
             statement.setString(5, obj.getDate());
-            statement.execute();
+            statement.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -91,6 +94,29 @@ public class ActsDAOJdbsImpl implements CrudDAO<Act> {
 
     @Override
     public List<Act> findByParameters(Act obj) {
+        List<Act> acts = new ArrayList<>();
+        try {
+            PreparedStatement statement = connection.prepareStatement(SQL_FIND_BY_PARAMETRS);
+            statement.setInt(1, obj.getId_acts());
+            statement.setInt(2, obj.getId_document());
+            statement.setInt(3, obj.getId_employee());
+            statement.setInt(4, obj.getId_reader());
+            statement.setString(5, obj.getDate());
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Act act = new Act(
+                        resultSet.getInt("id_acts"),
+                        resultSet.getInt("id_document"),
+                        resultSet.getInt("id_employee"),
+                        resultSet.getInt("id_reader"),
+                        resultSet.getString("date")
+                );
+                acts.add(act);
+            }
+            return acts;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 }
