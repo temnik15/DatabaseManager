@@ -2,16 +2,12 @@ package ru.temnik.databaseManager;
 
 import lombok.Getter;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import ru.temnik.databaseManager.DAO.CrudDAO;
-import ru.temnik.databaseManager.DAO.CrudDAOJdbcImpl;
 import ru.temnik.databaseManager.DAO.UserDAO;
-import ru.temnik.databaseManager.Entities.DocumentStatus;
 import ru.temnik.databaseManager.Entities.User;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Properties;
 
 public class App {
@@ -21,7 +17,7 @@ public class App {
 
 
     public App(ControllerGUI controllerGUI) throws SQLException {
-        this.controllerGUI=controllerGUI;
+        this.controllerGUI = controllerGUI;
         dataSource = new DriverManagerDataSource();
         initDB();
     }
@@ -44,17 +40,13 @@ public class App {
         dataSource.setDriverClassName(driverClassName);
     }
 
-    public boolean authorization(UserDAO userDAO,User user){
-        /*User userFromDB = userDAO.findByLogin(user.getLogin());
-        if(userFromDB!=null){
-            if(userFromDB.getPassword().equals(user.getPassword())){
+    public boolean authorization(UserDAO userDAO, User user) {
+        User userFromDB = userDAO.findByLogin(user.getLogin());
+        if (userFromDB != null) {
+            if (userFromDB.getPassword().equals(user.getPassword())) {
                 return true;
             }
-        }*/
-
-        return true;
-        //return false;
+        }
+        return false;
     }
-
-
 }
