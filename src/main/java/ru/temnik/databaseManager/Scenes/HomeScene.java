@@ -19,10 +19,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import ru.temnik.databaseManager.ControllerGUI;
 import ru.temnik.databaseManager.DAO.*;
-import ru.temnik.databaseManager.Entities.DegreeOfSecrecy;
-import ru.temnik.databaseManager.Entities.DocumentStatus;
-import ru.temnik.databaseManager.Entities.EntitiesType;
-import ru.temnik.databaseManager.Entities.User;
+import ru.temnik.databaseManager.Entities.*;
 
 import javax.sql.DataSource;
 import javax.xml.soap.Text;
@@ -35,11 +32,7 @@ import java.util.Map;
 public class HomeScene extends AbstractScene {
     private final TableDAO tableDAO;
     private final DataSource dataSource;
-    private final DocumentStatusDAO documentStatusDAO;
     private final UserDAO userDAO;
-    private final CrudDAO degreeOfSecrecyDAO;
-    private final CrudDAO actsAdmDAO;
-    private final CrudDAO readerDAO;
     private CrudDAO crudDAO;
     private Map<String, Button> controlBtns;
 
@@ -48,11 +41,8 @@ public class HomeScene extends AbstractScene {
         tableDAO = controllerGUI.getTableDAO();
         controlBtns = new HashMap<>();
         dataSource = controllerGUI.getApp().getDataSource();
-        documentStatusDAO = new DocumentStatusJdbcImpl(dataSource);
         userDAO = new UserDaoJdbcImpl(dataSource);
-        degreeOfSecrecyDAO = new DegreeOfSecrecyDAOJdbcImpl(dataSource);
-        actsAdmDAO=new ActsAdmDAOJdbsImpl(dataSource);
-        readerDAO=new ReaderDAOJdbcImpl(dataSource);
+
     }
 
     @Override
@@ -111,33 +101,57 @@ public class HomeScene extends AbstractScene {
             Object objectDao = null;
             switch (entityType) {
                 case DOCUMENT_STATUSES:
-                    //crudDAO=new CrudDAOJdbcImpl(dataSource, DocumentStatus.class);
-                   // objects = FXCollections.observableArrayList(crudDAO.findAll().toArray());
-                    //objectDao = crudDAO;
-                    objects = FXCollections.observableArrayList(documentStatusDAO.findAll().toArray());
-                    objectDao = documentStatusDAO;
+                    crudDAO=new CrudDAOJdbcImpl(dataSource, DocumentStatus.class);
+                    objects = FXCollections.observableArrayList(crudDAO.findAll().toArray());
+                    objectDao = crudDAO;
                     break;
                 case USERS:
-                   // objects = FXCollections.observableArrayList(userDAO.findAll().toArray());
-                    crudDAO=new CrudDAOJdbcImpl(dataSource, User.class);
+                   /* crudDAO=new CrudDAOJdbcImpl(dataSource, User.class);
                     objects = FXCollections.observableArrayList(crudDAO.findAll().toArray());
-                    //objectDao = userDAO;
+                    objectDao = crudDAO;*/
+                    crudDAO=new UserDaoJdbcImpl(dataSource);
+                    objects = FXCollections.observableArrayList(crudDAO.findAll().toArray());
                     objectDao = crudDAO;
                     break;
                 case DEGREES_OF_SECRECY:
                     crudDAO=new CrudDAOJdbcImpl(dataSource, DegreeOfSecrecy.class);
                     objects = FXCollections.observableArrayList(crudDAO.findAll().toArray());
-                   // objects = FXCollections.observableArrayList(degreeOfSecrecyDAO.findAll().toArray());
-                    //objectDao = degreeOfSecrecyDAO;
+                    objectDao = crudDAO;
                     objectDao = crudDAO;
                     break;
                 case ACTS_ADMISSION:
-                    objects = FXCollections.observableArrayList(actsAdmDAO.findAll().toArray());
-                    objectDao = actsAdmDAO;
+                   // objects = FXCollections.observableArrayList(actsAdmDAO.findAll().toArray());
+                   // objectDao = actsAdmDAO;
+                    break;
+                case ACTS_EXTRADITION:
+                    crudDAO=new CrudDAOJdbcImpl(dataSource, DocumentStatus.class);
+                    objects = FXCollections.observableArrayList(crudDAO.findAll().toArray());
+                    objectDao = crudDAO;
                     break;
                 case READERS:
-                    objects = FXCollections.observableArrayList(readerDAO.findAll().toArray());
-                    objectDao = readerDAO;
+                    crudDAO=new CrudDAOJdbcImpl(dataSource, Reader.class);
+                    objects = FXCollections.observableArrayList(crudDAO.findAll().toArray());
+                    objectDao = crudDAO;
+                    break;
+                case DOCUMENTS:
+                    crudDAO=new CrudDAOJdbcImpl(dataSource, Document.class);
+                    objects = FXCollections.observableArrayList(crudDAO.findAll().toArray());
+                    objectDao = crudDAO;
+                    break;
+                case EMPLOYEES:
+                    crudDAO=new CrudDAOJdbcImpl(dataSource, Employee.class);
+                    objects = FXCollections.observableArrayList(crudDAO.findAll().toArray());
+                    objectDao = crudDAO;
+                    break;
+                case PASSPORTS:
+                    crudDAO=new CrudDAOJdbcImpl(dataSource, Passport.class);
+                    objects = FXCollections.observableArrayList(crudDAO.findAll().toArray());
+                    objectDao = crudDAO;
+                    break;
+                case POSITIONS_EMPLOYEES:
+                    crudDAO=new CrudDAOJdbcImpl(dataSource, PositionEmployee.class);
+                    objects = FXCollections.observableArrayList(crudDAO.findAll().toArray());
+                    objectDao = crudDAO;
                     break;
             }
             TableView<Object> table = getTable(objects, objectDao);
