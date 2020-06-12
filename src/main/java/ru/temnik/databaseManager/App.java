@@ -7,17 +7,14 @@ import ru.temnik.databaseManager.Entities.User;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Properties;
 
 public class App {
-    private final ControllerGUI controllerGUI;
     @Getter
     private final DriverManagerDataSource dataSource;
 
 
-    public App(ControllerGUI controllerGUI) throws SQLException {
-        this.controllerGUI = controllerGUI;
+    public App() {
         dataSource = new DriverManagerDataSource();
         initDB();
     }
@@ -25,7 +22,7 @@ public class App {
     private void initDB() {
         Properties properties = new Properties();
         try {
-            properties.load(new FileInputStream("src/main/java/ru/temnik/databaseManager/Config/db.properties"));
+            properties.load(new FileInputStream("src/main/resources/config/db.properties"));
         } catch (IOException e) {
             e.printStackTrace();
         }
