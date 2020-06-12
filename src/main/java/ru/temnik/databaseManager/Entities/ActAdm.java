@@ -1,13 +1,18 @@
 package ru.temnik.databaseManager.Entities;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import ru.temnik.databaseManager.Annotation.Id;
+import ru.temnik.databaseManager.Annotation.Table;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class Act {
+@Table(name="acts_admission")
+public class ActAdm {
+    @Id
     private int id_acts;
     private int id_document;
     private int id_employee;

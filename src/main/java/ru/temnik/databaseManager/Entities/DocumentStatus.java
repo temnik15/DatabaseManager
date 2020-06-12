@@ -1,15 +1,16 @@
 package ru.temnik.databaseManager.Entities;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import ru.temnik.databaseManager.Annotation.Id;
 import ru.temnik.databaseManager.Annotation.Table;
 
-@Table(name="document_statuses")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Table(name="document_statuses")
 public class DocumentStatus {
     @Id
     private int id_status;
