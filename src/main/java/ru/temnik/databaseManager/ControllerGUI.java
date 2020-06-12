@@ -28,7 +28,7 @@ public class ControllerGUI extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        app = new App(this);
+        app = new App();
         tableDAO = new TableDaoJdbcImpl(app.getDataSource());
         mainStage = stage;
         allScenes = new HashMap<>();
@@ -38,5 +38,6 @@ public class ControllerGUI extends Application {
         authScene.show(null);
         allScenes.put("authScene", authScene);
         mainStage.show();
+
     }
 }
