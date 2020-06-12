@@ -87,8 +87,6 @@ public class UserDaoJdbcImpl implements UserDAO {
                 statement.setString(3,obj.getPassword()+'%');
             }
 
-
-            System.out.println(statement.toString());
             ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()){
                 User user = new User(
