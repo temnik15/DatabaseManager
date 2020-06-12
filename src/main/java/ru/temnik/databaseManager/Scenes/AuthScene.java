@@ -66,7 +66,6 @@ public class AuthScene extends AbstractScene {
             new Thread(()->{
                 User user = new User(loginField.getText(),passwordField.getText());
                 if(app.authorization(userDAO,user)){
-                    System.out.println("true");
                     AbstractScene homeScene = controllerGUI.getAllScenes().get("HomeScene");
                     if(homeScene==null){
                         homeScene = new HomeScene(controllerGUI);
