@@ -142,25 +142,13 @@ public class CrudDAOJdbcImpl<T> implements CrudDAO<T> {
 
     @Override
     public List<T> findAll() {
+        List<T> entities = new ArrayList<>();
         try {
             logger.info(SQL_FIND_ALL.toString());
-            List<T> entities = new ArrayList<>();
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(SQL_FIND_ALL.toString());
             Field[] fields = entityClass.getDeclaredFields();
-            while (resultSet.next()) {
-                Object entity = entityClass.newInstance();
-                for (int i = 0; i < fields.length; i++) {
-                    fields[i].setAccessible(true);
-                    if (fields[i].getType().getSimpleName().equals("int")) {
-                        fields[i].set(entity, resultSet.getInt(fields[i].getName()));
-                    } else {
-                        fields[i].set(entity, resultSet.getString(fields[i].getName()));
-                    }
-                }
-                entities.add((T) entity);
-            }
-            return entities;
+            return getListEntity((List<T>) entities, resultSet, fields);
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -168,7 +156,23 @@ public class CrudDAOJdbcImpl<T> implements CrudDAO<T> {
         } catch (InstantiationException e) {
             e.printStackTrace();
         }
-        return null;
+        return entities;
+    }
+
+    private List<T> getListEntity(List<T> entities, ResultSet resultSet, Field[] fields) throws SQLException, InstantiationException, IllegalAccessException {
+        while (resultSet.next()) {
+            Object entity = entityClass.newInstance();
+            for (int i = 0; i < fields.length; i++) {
+                fields[i].setAccessible(true);
+                if (fields[i].getType().getSimpleName().equals("int")) {
+                    fields[i].set(entity, resultSet.getInt(fields[i].getName()));
+                } else {
+                    fields[i].set(entity, resultSet.getString(fields[i].getName()));
+                }
+            }
+            entities.add((T) entity);
+        }
+        return entities;
     }
 
     @Override
@@ -274,19 +278,7 @@ public class CrudDAOJdbcImpl<T> implements CrudDAO<T> {
                 }
             }
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                Object entity = entityClass.newInstance();
-                for (int i = 0; i < fields.length; i++) {
-                    fields[i].setAccessible(true);
-                    if (fields[i].getType().getSimpleName().equals("int")) {
-                        fields[i].set(entity, resultSet.getInt(fields[i].getName()));
-                    } else {
-                        fields[i].set(entity, resultSet.getString(fields[i].getName()));
-                    }
-                }
-                entities.add((T) entity);
-            }
-            return entities;
+            return getListEntity((List<T>) entities, resultSet, fields);
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
