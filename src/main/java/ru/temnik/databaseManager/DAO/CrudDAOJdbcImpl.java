@@ -49,7 +49,7 @@ public class CrudDAOJdbcImpl<T> implements CrudDAO<T> {
             Field[] fields = entityClass.getDeclaredFields();
             /*
             Дальше происходит поиск поля с аннотацией @Id.
-            Если не будет найдено такое поля или будет найдено 2 и более таких полей, то
+            Если не будет найдено такое поле или будет найдено 2 и более таких полей, то
             будет выброшено исключение
              */
             int counterId = 0;
@@ -57,7 +57,7 @@ public class CrudDAOJdbcImpl<T> implements CrudDAO<T> {
                 if (field.isAnnotationPresent(Id.class)) {
                     if (counterId > 0) {
                         try {
-                            throw new IdException("Таблица: " + tableName + ". Найдено более одного поля с аннотацией ID.");
+                            throw new IdException("Таблица: " + tableName + ". Найдено более одного поля с аннотацией Id.");
                         } catch (IdException e) {
                             e.printStackTrace();
                         }
