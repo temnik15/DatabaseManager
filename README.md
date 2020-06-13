@@ -1,6 +1,6 @@
-# DatabaseManager - GUI приложение, предоставляющее CRUD операции для таблиц из бд PostgeSQL.
+# Database Manager - GUI приложение, предоставляющее CRUD операции для таблиц из бд PostgeSQL.
 Приложение является учебный проектом, поэтому не предоставляет API для использования.
-Используемый стек - Java, JavaFX, JDBC, PostgeSQL, Log4J2
+Используемый стек - Java, JavaFX, JDBC, PostgeSQL, Log4J2,
 Reflection API (пожалуй самое интересное, подробнее в CrudDAOJdbcImpl.java)
 
 Благодаря данному проекту получил представление о  JavaFX, Reflection API, JDBC, аннотациях (написал две свои, см. package Annotation).
